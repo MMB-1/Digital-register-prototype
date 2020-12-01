@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Page1Form.ui.qml</file>
+        <file>Page2Form.ui.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Twoje_zajecia.qml</file>
+        <file>Uczniowie.qml</file>
+        <file>Grupy.qml</file>
+        <file>home-screen-512.png</file>
+        <file>ZajeciaAdd.qml</file>
+        <file>GrAdd.qml</file>
+        <file>ZajeciaPage.qml</file>
+        <file>StronaGlowna.qml</file>
+        <file>ZajeciaRect.qml</file>
+        <file>stock-images/art-2578353.jpg</file>
+        <file>icon.png</file>
+        <file>Ustawienia.qml</file>
+        <file>Pomoc.qml</file>
+    </qresource>
+</RCC>
