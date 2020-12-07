@@ -9,6 +9,7 @@ QT += gui
 
 SOURCES += \
         account.cpp \
+        classes.cpp \
         database.cpp \
         group.cpp \
         grouplist.cpp \
@@ -54,6 +55,7 @@ DISTFILES += \
 
 HEADERS += \
     account.h \
+    classes.h \
     database.h \
     group.h \
     grouplist.h \

@@ -2,14 +2,14 @@
 #include "studentlist.h"
 #include "student.h"
 #include "database.h"
-
+#include "account.h"
 
 #include <QSqlQueryModel>
 
 StudentModel::StudentModel(QObject *parent)
     : QSqlQueryModel(parent)
 {
-    this->updateModel();
+    this->updateModel(1);
 }
 
 
@@ -51,16 +51,19 @@ QHash<int,QByteArray> StudentModel::roleNames() const{
     roles[(int)Role::FNameRole] = "fname";
     roles[(int)Role::LNameRole] = "lname";
     roles[(int)Role::PhoneRole] = "phone";
+    roles[(int)Role::AddressRole] = "address";
+    roles[(int)Role::DescriptionRole] = "description";
+    roles[(int)Role::LoginIDRole] = "loginID";
     roles[(int)Role::checkedRole] = "checkedRole";
     return roles;
 }
 
 
 
-void StudentModel::updateModel()
+void StudentModel::updateModel(int id)
 {
-
- this->setQuery("SELECT id, " TABLE_FIRSTNAME ", " TABLE_LASTNAME ", " TABLE_PHONENUMBER " FROM " TABLE);
+    QString index = QString::number(id);
+    this->setQuery("SELECT id, " TABLE_FIRSTNAME ", " TABLE_LASTNAME ", " TABLE_PHONENUMBER " FROM " TABLE " WHERE " LOGIN_ID "=" +index );
 }
 
 int StudentModel::getId(int row) const

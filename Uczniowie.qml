@@ -133,8 +133,8 @@ Page
                     anchors.right:dodawanie
                     // Make a new entry in the database
                     onClicked: {
-                        database.inserIntoTable(fnameField.text , lnameField.text, phoneField.text)
-                        myModel.updateModel() // And updates the data model with a new record
+                        database.inserIntoTable(fnameField.text , lnameField.text, phoneField.text, account.loggedId)
+                        myModel.updateModel(account.loggedId) // And updates the data model with a new record
                         startButton = database.dbIsEmpty()
                         dodawanie.close()
                         fnameField.text = ""

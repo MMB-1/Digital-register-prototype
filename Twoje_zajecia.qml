@@ -243,7 +243,7 @@ Page {
 
             text: qsTr("Dodaj nowe zajęcia")
             onClicked: {
-                stackView.replace("ZajeciaAdd.qml")
+                stackView.push("ZajeciaAdd.qml")
 
             }
         }

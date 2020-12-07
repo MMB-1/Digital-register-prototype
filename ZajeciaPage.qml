@@ -161,16 +161,7 @@ Page {
         anchors.top: rectangle.top
         anchors.topMargin: 20
 
-        Button {
-            id: button
-            x: -156
-            y: 317
-            text: qsTr("Powrót")
-            onClicked: {
-            stackView.replace("Twoje_zajecia.qml")
-            }
 
-        }
     }
 
     ListView {

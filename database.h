@@ -17,10 +17,17 @@
 #define TABLE_FIRSTNAME             "firstName"
 #define TABLE_LASTNAME               "lastName"
 #define TABLE_PHONENUMBER              "phoneNumber"
+#define TABLE_ADDRESS                    "address"
+#define TABLE_DESCRIPTION               "description"
 
 #define LOGIN                      "login"
 #define LOGIN_USER                 "username"
 #define LOGIN_PASSWORD             "userpassword"
+#define LOGIN_ID                    "loginID"
+
+#define CLASSES                      "classes"
+#define CLASSES_NAME                 "classname"
+
 
 class DataBase : public QObject
 {
@@ -44,7 +51,7 @@ private:
 public slots:
     bool inserIntoStudentTable(const QVariantList &data);      // Adding entries to the table
     bool inserIntoLoginTable(const QVariantList &data);
-    bool inserIntoTable(const QString &firstName, const QString &lastName, const QString &phoneNumber);
+    bool inserIntoTable(const QString &firstName, const QString &lastName, const QString &phoneNumber, const int &loginID);
     bool inserIntoTable(const QString &username, const QString &userpassword);
     bool removeRecord(const int id); // Removing records from the table on its id
     bool  dbIsEmpty();

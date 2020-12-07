@@ -55,24 +55,37 @@ void DataBase::closeDataBase()
 bool DataBase::createTable()
 {
     QSqlQuery query;
-    if(!query.exec( "CREATE TABLE " TABLE " ("
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                            TABLE_FIRSTNAME     " VARCHAR(255)    NOT NULL,"
-                            TABLE_LASTNAME     " VARCHAR(255)    NOT NULL,"
-                            TABLE_PHONENUMBER       " VARCHAR(255)    NOT NULL"
-                        " )")){
-        qDebug() << "DataBase: error of create " << TABLE;
+    if(!query.exec(  "CREATE TABLE " LOGIN " ("
+                     "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                     LOGIN_USER    " VARCHAR(255)    NOT NULL,"
+                     LOGIN_PASSWORD     " VARCHAR(255)    NOT NULL"
+                 " )")){
+        qDebug() << "DataBase: error of create " << LOGIN;
         qDebug() << query.lastError().text();
         return false;
     }
-    else if(!query.exec(  "CREATE TABLE " LOGIN " ("
-                          "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                          LOGIN_USER    " VARCHAR(255)    NOT NULL,"
-                          LOGIN_PASSWORD     " VARCHAR(255)    NOT NULL"
-                      " )")){
-                               qDebug() << "DataBase: error of create " << LOGIN;
+    else if(!query.exec("CREATE TABLE " TABLE " ("
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        TABLE_FIRSTNAME     " VARCHAR(255)    NOT NULL,"
+                        TABLE_LASTNAME     " VARCHAR(255)    NOT NULL,"
+                        TABLE_PHONENUMBER       " VARCHAR(255)    NOT NULL,"
+                        TABLE_ADDRESS            " VARCHAR(255),"
+                        TABLE_DESCRIPTION       " VARCHAR(255),"
+                        LOGIN_ID " INTEGER,"
+                        "FOREIGN KEY (" LOGIN_ID ") REFERENCES " LOGIN "(id)"
+                    " )") ){
+                               qDebug() << "DataBase: error of create " << TABLE;
                                qDebug() << query.lastError().text();
                                return false;
+    }
+    else if(!query.exec("CREATE TABLE " CLASSES " ("
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        CLASSES_NAME     " VARCHAR(255)    NOT NULL,"
+                        LOGIN_ID " INTEGER,"
+                        "FOREIGN KEY (" LOGIN_ID ") REFERENCES " LOGIN "(id)"
+                        " )")){
+        qDebug() << "DataBase: error of create " << CLASSES;
+        qDebug() << query.lastError().text();
     }
     else{
         return true;
@@ -85,12 +98,13 @@ bool DataBase::inserIntoStudentTable(const QVariantList &data)
     QSqlQuery query;
     query.prepare("INSERT INTO " TABLE " ( " TABLE_FIRSTNAME ", "
                                              TABLE_LASTNAME ", "
-                                             TABLE_PHONENUMBER " ) "
-                  "VALUES (:firstName, :lastName, :phoneNumber)");
+                                             TABLE_PHONENUMBER", "
+                                             LOGIN_ID   " ) "
+                  "VALUES (:firstName, :lastName, :phoneNumber, :loginID)");
     query.bindValue(":firstName",       data[0].toString());
     query.bindValue(":lastName",       data[1].toString());
     query.bindValue(":phoneNumber",         data[2].toString());
-
+    query.bindValue(":loginID",             data[3].toString());
     if(!query.exec()){
         qDebug() << "error insert into " << TABLE;
         qDebug() << query.lastError().text();
@@ -118,12 +132,13 @@ bool DataBase::inserIntoLoginTable(const QVariantList &data){
 
 }
 
-bool DataBase::inserIntoTable(const QString &firstName, const QString &lastName, const QString &phoneNumber)
+bool DataBase::inserIntoTable(const QString &firstName, const QString &lastName, const QString &phoneNumber,const int &loginID)
 {
     QVariantList data;
     data.append(firstName);
     data.append(lastName);
     data.append(phoneNumber);
+    data.append(loginID);
 
     if(inserIntoStudentTable(data))
         return true;

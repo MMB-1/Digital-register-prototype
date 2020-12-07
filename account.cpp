@@ -3,11 +3,11 @@
 
 #include <QSqlQueryModel>
 
+
 Account::Account(QObject *parent)
 : QSqlQueryModel(parent)
 {
     this->updateModel();
-    isLog=false;
 }
 
 QVariant Account::data(const QModelIndex &index, int role) const
@@ -26,11 +26,6 @@ QHash<int,QByteArray> Account::roleNames() const{
     return roles;
 }
 
-int Account::getId(int row) const
-{
-    return this->data(this->index(row, 0), (int)Role::IdRole).toInt();
-}
-
 void Account::updateModel(){
     this->setQuery("SELECT id, " LOGIN_USER ", " LOGIN_PASSWORD " FROM " LOGIN);
 }
@@ -45,7 +40,6 @@ bool Account::checkData(const QString &username, const QString &userpassword ){
     query.next();
     num = query.value(0).toInt();
     if(num == 1){
-        isLog = true;
         return true;
     }
     else
@@ -65,7 +59,29 @@ bool Account::checkData(const QString &username){
     else
         return false;
 }
-bool Account::isLogged(){
-return isLog;
+
+int Account::getId(const QString &username) {
+    QSqlQuery query;
+    query.prepare("SELECT id FROM " LOGIN " WHERE " LOGIN_USER "=:USERNAME");
+    query.bindValue(":USERNAME",username);
+    query.exec();
+    query.next();
+    int  index= query.value(0).toInt();
+    qDebug() << index;
+    return index;
+}
+
+void Account::login(int index){
+    if(m_loggedId==-1){
+ m_loggedId = index;
+ m_statusLogged =true;
+ emit loginChanged(index);
+    }
+    else{
+        m_loggedId = -1;
+        m_statusLogged = false;
+        emit loginChanged(-1);
+    }
+    qDebug() << m_loggedId;
 }
 

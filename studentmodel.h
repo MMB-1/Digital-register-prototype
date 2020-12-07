@@ -17,6 +17,9 @@ public:
         FNameRole,
         LNameRole,
         PhoneRole,
+        AddressRole,
+        DescriptionRole,
+        LoginIDRole,
         checkedRole
     };
 
@@ -29,7 +32,7 @@ protected:
     QHash<int, QByteArray> roleNames() const override;
 
 public slots:
-    void updateModel();
+    void updateModel(int id);
     int getId(int row) const;
     void uncheckAll();
     //void checkAll();
@@ -38,7 +41,6 @@ private:
     bool isChecked(int index) const;
     void check(int index);
     void uncheck(int index);
-
     void checkedDebug() const;
 };
 
